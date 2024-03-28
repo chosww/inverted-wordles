@@ -10,7 +10,7 @@ const fetchNetlifySiteInfo = require("../functions-common/fetchNetlifySiteInfo.j
  * in the build_settings field. See https://docs.netlify.com/api/get-started/#get-sites
  */
 
-exports async function onRequest(event) {
+export async function onRequest(event) {
     console.log("Received check_netlify_site request at " + new Date());
     const blob = new Blob();
 

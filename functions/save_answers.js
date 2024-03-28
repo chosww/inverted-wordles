@@ -61,7 +61,7 @@ const updateAnswerFile = async (octokit, answersFilePath, jsonFileContent, sha, 
     });
 };
 
-exports async function onRequest(event) {
+export async function onRequest(event) {
     const incomingData = JSON.parse(event.body);
     console.log("Received save_answers request at " + new Date() + " with id " + incomingData.requestId);
     const blob = new Blob();

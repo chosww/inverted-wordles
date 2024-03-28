@@ -9,7 +9,7 @@ const serverUtils = require("../functions-common/serverUtils.js");
 const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
 const allowedParameters = ["wordleId", "workshop-name", "question", "entries"];
 
-exports async function onRequest(event) {
+export async function onRequest(event) {
     console.log("Received save_question request at " + new Date() + " with path " + event.path);
     const parameters = JSON.parse(event.body);
     const wordleId = parameters.wordleId;

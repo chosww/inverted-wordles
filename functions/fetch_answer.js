@@ -7,7 +7,7 @@ const {
 const serverUtils = require("../functions-common/serverUtils.js");
 const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
 
-exports async function onRequest(event) {
+export async function onRequest(event) {
     console.log("Received fetch_answers request at " + new Date() + " with path " + event.path);
     var wordleId = /fetch_answer\/(.*)/.exec(event.path)[1];
     const blob = new Blob();

@@ -8,7 +8,7 @@ const gitOpsApi = require("git-ops-api");
 const serverUtils = require("../functions-common/serverUtils.js");
 const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
 
-exports async function onRequest(event) {
+export async function onRequest(event) {
     console.log("Received fetch_wordles request at " + new Date());
     const blob = new Blob();
 

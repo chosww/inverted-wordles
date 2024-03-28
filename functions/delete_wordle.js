@@ -7,7 +7,7 @@ const {
     Octokit
 } = require("@octokit/core");
 
-exports async function onRequest(event) {
+export async function onRequest(event) {
     console.log("Received delete_wordle request at " + new Date() + " with path " + event.path);
     var wordleId = /delete_wordle\/(.*)/.exec(event.path)[1];
     const blob = new Blob();

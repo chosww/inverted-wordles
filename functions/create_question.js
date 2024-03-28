@@ -7,7 +7,7 @@ const {
 const gitOpsApi = require("git-ops-api");
 const serverUtils = require("../functions-common/serverUtils.js");
 
-exports async function onRequest(event) {
+export async function onRequest(event) {
     console.log("Received create_question request at " + new Date() + " with path " + event.path);
     const wordleId = JSON.parse(event.body).wordleId;
     const blob = new Blob();
