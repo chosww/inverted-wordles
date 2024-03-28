@@ -10,8 +10,9 @@ const fetchNetlifySiteInfo = require("../functions-common/fetchNetlifySiteInfo.j
  * in the build_settings field. See https://docs.netlify.com/api/get-started/#get-sites
  */
 
-exports.handler = async function (event) {
+exports async function onRequest(event) {
     console.log("Received check_netlify_site request at " + new Date());
+    const blob = new Blob();
 
     // Reject the request when:
     // 1. Not a GET request;
@@ -23,19 +24,19 @@ exports.handler = async function (event) {
     try {
         const netlifyInfo = await fetchNetlifySiteInfo();
         console.log("Done: if the current site is a Netlify site: " + !!netlifyInfo.id);
-        return {
+        return new Response(blob, {
             statusCode: 200,
             body: JSON.stringify({
                 isNetlifySite: !!netlifyInfo.id
             })
-        };
+        });
     } catch (e) {
         console.log("check_netlify_site error: ", e);
-        return {
+        return new Response(blob, {
             statusCode: 400,
             body: JSON.stringify({
                 error: e.response.statusText
             })
-        };
+        });
     }
 };

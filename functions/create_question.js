@@ -7,9 +7,10 @@ const {
 const gitOpsApi = require("git-ops-api");
 const serverUtils = require("../functions-common/serverUtils.js");
 
-exports.handler = async function (event) {
+exports async function onRequest(event) {
     console.log("Received create_question request at " + new Date() + " with path " + event.path);
     const wordleId = JSON.parse(event.body).wordleId;
+    const blob = new Blob();
 
     // Reject the request when:
     // 1. Not a POST request;
@@ -45,20 +46,20 @@ exports.handler = async function (event) {
         });
         console.log("Done: " + questionFileName + " has been created.");
 
-        return {
+        return new Response(blob, {
             statusCode: 200,
             body: JSON.stringify({
                 wordleId,
                 lastModifiedTimestamp
             })
-        };
+        });
     } catch (e) {
         console.log("create_question error: ", e);
-        return {
+        return new Response(blob, {
             statusCode: 400,
             body: JSON.stringify({
                 error: e
             })
-        };
+        });
     }
 };

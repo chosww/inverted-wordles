@@ -7,9 +7,10 @@ const {
 const serverUtils = require("../functions-common/serverUtils.js");
 const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
 
-exports.handler = async function (event) {
+exports async function onRequest(event) {
     console.log("Received fetch_answers request at " + new Date() + " with path " + event.path);
     var wordleId = /fetch_answer\/(.*)/.exec(event.path)[1];
+    const blob = new Blob();
 
     // Reject the request when:
     // 1. Not a GET request;
@@ -25,17 +26,17 @@ exports.handler = async function (event) {
     try {
         const answerFileInfo = await fetchJSONFile(octokit, serverUtils.branchName, "src/_data/" + wordleId + "-answers.json");
         console.log("Got answerFileInfo ", JSON.stringify(answerFileInfo));
-        return {
+        return new Response(blob, {
             statusCode: 200,
             body: JSON.stringify(answerFileInfo.content)
-        };
+        });
     } catch (e) {
         console.log("fetch_answers error: ", e);
-        return {
+        return new Response(blob, {
             statusCode: 400,
             body: JSON.stringify({
                 error: e
             })
-        };
+        });
     }
 };

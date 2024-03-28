@@ -7,9 +7,10 @@ const {
     Octokit
 } = require("@octokit/core");
 
-exports.handler = async function (event) {
+exports async function onRequest(event) {
     console.log("Received delete_wordle request at " + new Date() + " with path " + event.path);
     var wordleId = /delete_wordle\/(.*)/.exec(event.path)[1];
+    const blob = new Blob();
 
     // Reject the request when:
     // 1. Not a DELETE request;
@@ -55,17 +56,17 @@ exports.handler = async function (event) {
             });
             console.log("Done: the wordle with ID " + wordleId + " has been deleted.");
         }
-        return {
+        return new Response(blob, {
             statusCode: 200,
             body: "Deleted successfully!"
-        };
+        });
     } catch (e) {
         console.log("delete_wordle error: ", e);
-        return {
+        return new Response(blob, {
             statusCode: 400,
             body: JSON.stringify({
                 error: e
             })
-        };
+        });
     }
 };

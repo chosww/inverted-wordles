@@ -8,8 +8,9 @@ const gitOpsApi = require("git-ops-api");
 const serverUtils = require("../functions-common/serverUtils.js");
 const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
 
-exports.handler = async function (event) {
+exports async function onRequest(event) {
     console.log("Received fetch_wordles request at " + new Date());
+    const blob = new Blob();
 
     // Reject when:
     // 1. The request when the request is not a GET request;
@@ -44,17 +45,17 @@ exports.handler = async function (event) {
             wordles[found[1]] = await fetchJSONFile(octokit, serverUtils.branchName, file.path);
         }
 
-        return {
+        return new Response(blob, {
             statusCode: 200,
             body: JSON.stringify(wordles)
-        };
+        });
     } catch (e) {
         console.log("fetch_wordles error: ", e);
-        return {
+        return new Response(blob, {
             statusCode: 400,
             body: JSON.stringify({
                 error: e
             })
-        };
+        });
     }
 };

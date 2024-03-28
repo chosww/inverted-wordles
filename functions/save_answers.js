@@ -61,9 +61,10 @@ const updateAnswerFile = async (octokit, answersFilePath, jsonFileContent, sha, 
     });
 };
 
-exports.handler = async function (event) {
+exports async function onRequest(event) {
     const incomingData = JSON.parse(event.body);
     console.log("Received save_answers request at " + new Date() + " with id " + incomingData.requestId);
+    const blob = new Blob();
 
     const wordleId = incomingData.wordleId;
     const answers = incomingData.answers;
@@ -102,17 +103,17 @@ exports.handler = async function (event) {
             console.log("Done: Created the answers file.");
         }
 
-        return {
+        return new Response(blob, {
             statusCode: 200,
             body: "Success"
-        };
+        });
     } catch (e) {
         console.log("save_answers error: ", e);
-        return {
+        return new Response(blob, {
             statusCode: 400,
             body: JSON.stringify({
                 error: e
             })
-        };
+        });
     }
 };
