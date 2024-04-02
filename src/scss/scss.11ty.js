@@ -8,7 +8,7 @@ const path = require("path");
 const sass = require("sass");
 const CleanCSS = require("clean-css");
 const cssesc = require("cssesc");
-const isProd = process.env.CONTEXT === "production";
+const isProd = env.CONTEXT === "production";
 
 module.exports = class {
     async data() {

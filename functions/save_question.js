@@ -36,7 +36,7 @@ export async function onRequest(event) {
     }
 
     const octokit = new Octokit({
-        auth: process.env.GITHUB_TOKEN
+        auth: env.GITHUB_TOKEN
     });
     const branch = serverUtils.branchName;
 
